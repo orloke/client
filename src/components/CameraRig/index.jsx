@@ -23,8 +23,10 @@ export function CameraRig({ children }) {
       else targetPosition = [0, 0, 2];
     }
 
+    //esse posiciona na tela
     easing.damp3(state.camera.position, targetPosition, 0.25, delta)
 
+    //esse permite a rotação
     easing.dampE(
       group.current.rotation,
       [state.pointer.y / 10, -state.pointer.x / 5, 0],

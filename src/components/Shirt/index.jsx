@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable no-unused-vars */
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
@@ -16,6 +14,7 @@ export function Shirt() {
   return (
     <group>
       <mesh
+        scale={3}
         castShadow
         geometry={nodes.T_Shirt_male.geometry}
         material={materials.lambert1}
