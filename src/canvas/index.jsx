@@ -1,6 +1,21 @@
+import { Canvas } from '@react-three/fiber';
+import { Environment, Center } from '@react-three/drei';
 
-export function Canvas() {
+import { Shirt } from '../components/Shirt';
+import { Backdrop } from '../components/Backdrop';
+import { CameraRig } from '../components/CameraRig';
+
+export function CanvasModel() {
   return (
-    <div className='/* classname */'>Canvas</div>
+    <Canvas>
+      <ambientLight intensity={0.5} />
+      <Environment preset="city" />
+      <CameraRig>
+        {/* <Backdrop /> */}
+        <Center>
+          <Shirt />
+        </Center>
+      </CameraRig>
+    </Canvas>
   );
 }
