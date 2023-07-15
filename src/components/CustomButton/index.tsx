@@ -1,9 +1,15 @@
-/* eslint-disable react/prop-types */
-
 import { useSnapshot } from 'valtio';
 import state from '../../store';
+import React from 'react';
 
-export function CustomButton({ title, type, customStyles, handleClick }) {
+interface CustomButtonProps{
+  title: string;
+  type?: 'filled'
+  customStyles?: string;
+  handleClick: ()=>void
+}
+
+export function CustomButton({ title, type, customStyles, handleClick }: CustomButtonProps) {
   const snap = useSnapshot(state)
   const generateStyle = type => {
     if (type === 'filled') {

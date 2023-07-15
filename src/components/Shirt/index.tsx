@@ -4,10 +4,11 @@ import { useFrame } from '@react-three/fiber';
 import { Decal, useGLTF, useTexture } from '@react-three/drei';
 
 import state from '../../store';
+import React from 'react';
 
 export function Shirt() {
   const snap = useSnapshot(state);
-  const { nodes, materials } = useGLTF('/shirt_baked.glb');
+  const { nodes, materials } = useGLTF('/shirt_baked.glb') as any;
 
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
@@ -42,7 +43,6 @@ export function Shirt() {
             scale={0.15}
             map={logoTexture}
             depthTest={false}
-            depthWrite={true}
           />
         )}
       </mesh>

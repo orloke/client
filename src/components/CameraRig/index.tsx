@@ -1,19 +1,23 @@
-import { useFrame } from '@react-three/fiber';
-import { easing } from 'maath';
+import { ThreeElements, useFrame } from '@react-three/fiber';
+import { easing, vector3 } from 'maath';
 import { useSnapshot } from 'valtio';
-
 import state from '../../store';
-import { useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
+import { Euler, Group } from 'three';
 
-export function CameraRig({ children }) {
-  const group = useRef();
+interface CameraRigProps {
+  children: ReactNode
+}
+
+export function CameraRig({ children }: CameraRigProps) {
+  const group = useRef(null);
   const snap = useSnapshot(state);
 
   useFrame((state, delta) => {
     const isBreakpoint = window.innerWidth <= 1260;
     const isMobile = window.innerWidth <= 600;
 
-    let targetPosition = [-0.4, 0, 2];
+    let targetPosition = [-0.4, 0, 2] as any;
 
     if (snap.intro) {
       if (isBreakpoint) targetPosition = [0, 0, 2];
@@ -28,6 +32,7 @@ export function CameraRig({ children }) {
 
     //esse permite a rotação
     easing.dampE(
+      //@ts-ignore
       group.current.rotation,
       [state.pointer.y / 10, -state.pointer.x / 5, 0],
       0.25,

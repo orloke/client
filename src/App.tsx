@@ -1,3 +1,4 @@
+import React from "react"
 import { CanvasModel } from "./canvas"
 import Customizer from "./pages/Customizer"
 import Home from "./pages/Home"
