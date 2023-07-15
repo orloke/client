@@ -53,17 +53,16 @@ export default function Customizer() {
     setActiveFilterTab(prev => {
       return {
         ...prev,
-        [tabName]: !prev[tabName],
-      };
-    });
+        [tabName]: !prev[tabName]
+      }
+    })
   };
 
   const handleDecals = (type: string, result: any) => {
     const decalTypes = DecalTypes[type];
     state[decalTypes.stateProperty] = result;
-    if (activeFilterTab[decalTypes.filtertab]) {
+    if (!activeFilterTab[decalTypes.filtertab]) {
       handleAcctiveFilterTab(decalTypes.filterTab);
-      console.log(decalTypes.filterTab);
     }
   };
 
