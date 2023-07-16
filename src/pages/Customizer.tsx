@@ -25,6 +25,17 @@ export default function Customizer() {
     stylishShirt: false,
   });
 
+  const handleSubmit = async (type: string) => {
+    if (!prompt) return alert('Please enter a prompt');
+    try {
+    } catch (error) {
+      alert(error);
+    } finally {
+      setGeneratingImg(false);
+      setActiveEditorTab('');
+    }
+  };
+
   const generatedTabContent = () => {
     switch (activeEditorTab) {
       case 'colorpicker':
@@ -32,7 +43,14 @@ export default function Customizer() {
       case 'filepicker':
         return <FilePicker setFile={setFile} file={file} readFile={readFile} />;
       case 'aipicker':
-        return <AIPicker />;
+        return (
+          <AIPicker
+            prompt={prompt}
+            setPrompt={setPrompt}
+            generatingImg={generatingImg}
+            handleSubmit={handleSubmit}
+          />
+        );
       default:
         return null;
     }
@@ -53,9 +71,9 @@ export default function Customizer() {
     setActiveFilterTab(prev => {
       return {
         ...prev,
-        [tabName]: !prev[tabName]
-      }
-    })
+        [tabName]: !prev[tabName],
+      };
+    });
   };
 
   const handleDecals = (type: string, result: any) => {
