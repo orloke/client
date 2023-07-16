@@ -28,6 +28,20 @@ export default function Customizer() {
   const handleSubmit = async (type: string) => {
     if (!prompt) return alert('Please enter a prompt');
     try {
+      setGeneratingImg(true);
+      const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      // handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
       alert(error);
     } finally {
@@ -67,6 +81,7 @@ export default function Customizer() {
       default:
         state.isFullTexture = false;
         state.isLogoTexture = true;
+        break
     }
     setActiveFilterTab(prev => {
       return {
