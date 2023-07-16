@@ -1,6 +1,8 @@
+declare const Buffer
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { useSnapshot } from 'valtio';
+import * as deepai from 'deepai';
 
 import { AIPicker } from '../components/AIPicker';
 import { ColorPicker } from '../components/ColorPicker';
@@ -29,19 +31,22 @@ export default function Customizer() {
     if (!prompt) return alert('Please enter a prompt');
     try {
       setGeneratingImg(true);
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt,
-        }),
+
+      deepai.setApiKey('quickstart-QUdJIGlzIGNvbWluZy4uLi4K');
+
+      var resp = await deepai.callStandardApi('text2img', {
+        text: prompt,
       });
 
-      const data = await response.json();
-      console.log(data);
-      // handleDecals(type, `data:image/png;base64,${data.photo}`)
+      const response = await fetch(resp.output_url)
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        handleDecals(type, `data:image/jpg;base64,${base64String}`)
+      };
+
     } catch (error) {
       alert(error);
     } finally {
@@ -81,7 +86,7 @@ export default function Customizer() {
       default:
         state.isFullTexture = false;
         state.isLogoTexture = true;
-        break
+        break;
     }
     setActiveFilterTab(prev => {
       return {
